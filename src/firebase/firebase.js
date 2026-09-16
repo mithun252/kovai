@@ -11,6 +11,34 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 }
 
-const app = initializeApp(firebaseConfig)
-export const auth = getAuth(app)
-export const db = getFirestore(app)
+const requiredConfigKeys = [
+  'apiKey',
+  'authDomain',
+  'projectId',
+  'storageBucket',
+  'messagingSenderId',
+  'appId',
+]
+
+for (const key of requiredConfigKeys) {
+  if (!firebaseConfig[key] || firebaseConfig[key].includes('YOUR_')) {
+    console.warn(
+      `Firebase config missing or placeholder value for: ${key}. ` +
+        'Please update your .env file with real Firebase credentials.',
+    )
+  }
+}
+
+let app
+let auth
+let db
+
+try {
+  app = initializeApp(firebaseConfig)
+  auth = getAuth(app)
+  db = getFirestore(app)
+} catch (err) {
+  console.error('Failed to initialize Firebase:', err)
+}
+
+export { app, auth, db }

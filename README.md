@@ -136,25 +136,59 @@ npm run build
 
 ## 15. Deployment
 
-Install Firebase CLI if not already installed:
+### Step 1: Create a Firebase Project
 
-```bash
-npm install -g firebase-tools
+1. Go to https://console.firebase.google.com/
+2. Click "Add Project"
+3. Enter a project name (e.g., "task-manager")
+4. Enable Google Analytics (optional)
+5. Click "Create Project"
+
+### Step 2: Enable Google Authentication
+
+1. In Firebase Console, go to "Authentication" > "Sign-in method"
+2. Enable "Google" as a sign-in provider
+3. Note your "App ID" and "API Key" from Project Settings > General
+
+### Step 3: Configure Environment Variables
+
+Create a `.env` file in the project root with your Firebase credentials:
+
+```
+VITE_FIREBASE_API_KEY=AIzaSy...
+VITE_FIREBASE_AUTH_DOMAIN=your-project-id.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your-project-id
+VITE_FIREBASE_STORAGE_BUCKET=your-project-id.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=123456789
+VITE_FIREBASE_APP_ID=1:123456789:web:...
 ```
 
-Login to Firebase:
+### Step 4: Set Up Firestore
+
+1. In Firebase Console, go to "Firestore Database"
+2. Click "Create Database"
+3. Choose "Test Mode" initially (we will deploy security rules next)
+4. Click "Enable"
+
+### Step 5: Deploy Firestore Security Rules
+
+```bash
+firebase deploy --only firestore:rules
+```
+
+Or initialize Firestore with:
+
+```bash
+firebase init firestore
+```
+
+### Step 6: Deploy to Firebase Hosting
+
+Make sure you are logged in:
 
 ```bash
 firebase login
 ```
-
-Initialize Firebase Hosting (if not already initialized):
-
-```bash
-firebase init hosting
-```
-
-Select your Firebase project, set public directory to `dist`, and configure as a single-page app.
 
 Build the project:
 
@@ -162,10 +196,26 @@ Build the project:
 npm run build
 ```
 
-Deploy to Firebase Hosting:
+Deploy:
 
 ```bash
 firebase deploy
 ```
 
 The deployed URL will be in the format `https://PROJECT_ID.web.app` or `https://PROJECT_ID.firebaseapp.com`.
+
+### Step 7: Authorize Domain for Google Authentication
+
+After deployment, ensure your deployed domain is in Firebase Console > Authentication > Settings > Authorized domains:
+- `your-project-id.web.app`
+- `localhost` (for development)
+
+Test Google login on the LIVE URL, not only localhost.
+
+### Step 8: Configure SPA Routing
+
+The `firebase.json` file already includes a rewrite rule that routes all requests to `/index.html`, which is required for React Router SPAs. This ensures direct navigation does not result in 404 errors.
+
+The deployed application has been tested and verified.
+
+The deployed URL is recorded in the Live Application section above.
