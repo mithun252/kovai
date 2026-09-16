@@ -34,6 +34,16 @@ The following portions were generated with AI assistance:
 - Firebase Hosting configuration (`firebase.json`)
 - README.md and AI_USAGE.md
 
+## Deployment
+
+The application was successfully deployed to Firebase Hosting on 2026-09-16.
+
+Live URL: https://task-manager-7d674.web.app
+
+Firebase CLI authentication was completed with account: mithun.s2023aiml@sece.ac.in
+
+Firestore security rules were deployed and compiled successfully.
+
 ## Manual Modifications
 
 Generated code was reviewed and modified where necessary, including:

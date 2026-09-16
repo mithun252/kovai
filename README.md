@@ -27,7 +27,7 @@ Task Manager is a simple web application that allows users to sign in with their
 GitHub Repository: https://github.com/mithun252/kovai
 
 LIVE APPLICATION:
-[ADD DEPLOYED URL HERE]
+https://task-manager-7d674.web.app
 
 ## 5. Login Instructions
 
