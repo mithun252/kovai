@@ -15,6 +15,10 @@ function TaskForm({ userId }) {
       setError('Please enter a task title.')
       return
     }
+    if (!db) {
+      setError('Database not initialized. Please refresh.')
+      return
+    }
     setLoading(true)
     try {
       await addDoc(collection(db, 'tasks'), {
@@ -25,8 +29,9 @@ function TaskForm({ userId }) {
       })
       setTitle('')
     } catch (err) {
-      setError('Failed to create task. Please try again.')
-      console.error('Create task error:', err)
+      const code = err?.code || 'unknown'
+      setError(`Failed to create task (${code}). Please try again.`)
+      console.error('Create task error:', code, err?.message)
     } finally {
       setLoading(false)
     }

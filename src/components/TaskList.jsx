@@ -5,7 +5,6 @@ import {
   where,
   orderBy,
   onSnapshot,
-  serverTimestamp,
 } from 'firebase/firestore'
 import { db } from '../firebase/firebase'
 import TaskItem from './TaskItem'
@@ -21,6 +20,11 @@ function TaskList({ userId }) {
 
   useEffect(() => {
     if (!userId) return
+    if (!db) {
+      setError('Database not initialized. Please refresh.')
+      setLoading(false)
+      return
+    }
     setLoading(true)
     setError('')
     const tasksRef = collection(db, 'tasks')
@@ -42,9 +46,11 @@ function TaskList({ userId }) {
           setLoading(false)
         },
         (err) => {
-          setError('Failed to load tasks. Please refresh and try again.')
+          const code = err?.code || 'unknown'
+          const message = err?.message || ''
+          setError(`Failed to load tasks (${code}). Please refresh and try again.`)
           setLoading(false)
-          console.error('Firestore listener error:', err)
+          console.error('Firestore listener error:', code, message)
         }
       )
       return () => unsubscribe()
