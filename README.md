@@ -221,3 +221,9 @@ The `firebase.json` file already includes a rewrite rule that routes all request
 The deployed application has been tested and verified.
 
 The deployed URL is recorded in the Live Application section above.
+
+### Deployment Completed
+
+Deployment was completed on 2026-09-16 using Firebase CLI account `mithun.s2023aiml@sece.ac.in`.
+
+Firestore security rules were compiled successfully and deployed.
