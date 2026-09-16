@@ -1,0 +1,171 @@
+# Task Manager
+
+## 1. Overview
+
+Task Manager is a simple web application that allows users to sign in with their Google account, create tasks, view their tasks, and update task statuses. Each user can only see and manage their own tasks.
+
+## 2. Features
+
+- **Google Authentication**: Sign in securely with your Google account
+- **Create Tasks**: Add new tasks with a title
+- **View Tasks**: See all your tasks in a list
+- **Update Task Status**: Change task status between Planned, In Progress, and Complete
+- **Status Filter**: Filter tasks by status (All, Planned, In Progress, Complete)
+- **Task Counts**: View counts for total tasks and each status
+
+## 3. Technology Stack
+
+- React
+- JavaScript
+- Vite
+- Firebase Authentication
+- Cloud Firestore
+- Firebase Hosting
+
+## 4. How to Access the Application
+
+LIVE APPLICATION:
+[ADD DEPLOYED URL HERE]
+
+## 5. Login Instructions
+
+1. Open the application in your browser
+2. Click "Sign in with Google"
+3. Select your Google account
+4. After successful login, the task dashboard appears
+5. Click "Logout" to sign out
+
+## 6. How to Create a Task
+
+1. Ensure you are signed in
+2. Enter a task title in the input field
+3. Click "Add Task"
+4. The new task will appear with "Planned" status
+5. Empty task titles are not allowed
+
+## 7. How to Update Status
+
+Each task has a status dropdown with three options:
+
+- **Planned**: The task is being planned
+- **In Progress**: The task is currently being worked on
+- **Complete**: The task is finished
+
+Select the desired status to update the task. Changes are saved automatically to Firestore.
+
+## 8. Task Filtering
+
+Use the filter buttons above the task list to show only tasks matching a specific status:
+
+- **All**: Shows all tasks
+- **Planned**: Shows only planned tasks
+- **In Progress**: Shows only in-progress tasks
+- **Complete**: Shows only completed tasks
+
+Filtering only affects the display and does not modify the database.
+
+## 9. Task Counts
+
+Counters displayed above the task list show:
+
+- **Total**: Total number of your tasks
+- **Planned**: Number of tasks with Planned status
+- **In Progress**: Number of tasks with In Progress status
+- **Complete**: Number of tasks with Complete status
+
+Counts are calculated from your current tasks in Firestore.
+
+## 10. Assumptions
+
+1. Each task belongs to the Google-authenticated user who created it
+2. Task titles are required
+3. New tasks start with "Planned" status
+4. Only the three specified statuses are supported (Planned, In Progress, Complete)
+5. Task deletion is not included because it is not explicitly required
+6. Editing the task title is not included because only task creation and status updates are explicitly required
+7. The application is intended for individual task management rather than team collaboration
+8. Google is the only authentication provider because Google Authentication is explicitly required
+9. Tasks are stored in Cloud Firestore
+10. The application does not include notifications, reminders, or deadlines because they were not part of the requirements
+
+## 11. Known Limitations
+
+- No task deletion functionality
+- No task title editing functionality
+- No offline support (requires internet connection)
+- Single Google authentication provider only
+- No task search or sorting beyond status filter
+
+## 12. Important Notes / Warnings
+
+- **Google authentication is required**: You must sign in with a Google account to use the application
+- **Users can only access their own tasks**: Firestore security rules prevent access to other users' tasks
+- **Internet connection is required**: The application requires a working internet connection
+- **Do not share authentication credentials**: Your Google account credentials are private and should never be shared
+
+## 13. Local Setup
+
+```bash
+git clone <repository-url>
+cd task-manager
+npm install
+```
+
+Create a `.env` file in the project root and add your Firebase configuration:
+
+```
+VITE_FIREBASE_API_KEY=your-api-key
+VITE_FIREBASE_AUTH_DOMAIN=your-project-id.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your-project-id
+VITE_FIREBASE_STORAGE_BUCKET=your-project-id.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
+VITE_FIREBASE_APP_ID=your-app-id
+```
+
+Run the development server:
+
+```bash
+npm run dev
+```
+
+## 14. Production Build
+
+```bash
+npm run build
+```
+
+## 15. Deployment
+
+Install Firebase CLI if not already installed:
+
+```bash
+npm install -g firebase-tools
+```
+
+Login to Firebase:
+
+```bash
+firebase login
+```
+
+Initialize Firebase Hosting (if not already initialized):
+
+```bash
+firebase init hosting
+```
+
+Select your Firebase project, set public directory to `dist`, and configure as a single-page app.
+
+Build the project:
+
+```bash
+npm run build
+```
+
+Deploy to Firebase Hosting:
+
+```bash
+firebase deploy
+```
+
+The deployed URL will be in the format `https://PROJECT_ID.web.app` or `https://PROJECT_ID.firebaseapp.com`.

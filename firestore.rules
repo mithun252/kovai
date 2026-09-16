@@ -1,0 +1,20 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /tasks/{taskId} {
+      // Read: only authenticated users can read their own tasks
+      allow read: if request.auth != null
+                  && resource.data.userId == request.auth.uid;
+
+      // Create: only authenticated users can create tasks for themselves
+      allow create: if request.auth != null
+                   && request.resource.data.userId == request.auth.uid
+                   && request.resource.data.status in ['Planned', 'In Progress', 'Complete'];
+
+      // Update: only authenticated users can update their own tasks
+      allow update: if request.auth != null
+                   && resource.data.userId == request.auth.uid
+                   && request.resource.data.userId == resource.data.userId;
+    }
+  }
+}
